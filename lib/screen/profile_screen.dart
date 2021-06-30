@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -29,9 +30,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Center(
                 child: GestureDetector(
-                  onTap: () {
-                    //TODO: imagePicker kullanılacak
-                    print('tıklandı');
+                  onTap: () async {
+                    final ImagePicker _picker = ImagePicker();
+                    final PickedFile? pickedFile = await _picker.getImage(source: ImageSource.camera);
+                    // final PickedFile? pickedFile = await _picker.getImage(source: ImageSource.gallery);
+
+                    setState(() {
+                      profileImgFilePath = pickedFile == null ? null : pickedFile.path;
+                    });
                   },
                   child: profileImgFilePath == null
                       ? Text(
