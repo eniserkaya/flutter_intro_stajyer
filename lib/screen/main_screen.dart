@@ -22,7 +22,7 @@ class MainScreen extends StatelessWidget {
         onPressed: () {
           sunucudanVerileriGetir().then((response) {
             Kullanici kullanici = Kullanici.fromJson(json.decode(response.data));
-            print(kullanici.ad);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(kullanici)));
           });
         },
         child: Icon(Icons.ac_unit),
@@ -44,7 +44,7 @@ class MainScreen extends StatelessWidget {
             ListTile(
               title: Text('Profil'),
               leading: Icon(Icons.person),
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen())),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(null))),
             )
           ],
         ),

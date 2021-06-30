@@ -1,9 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_intro/model/kullanici.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
+  Kullanici? kullanici;
+
+
+  ProfileScreen(this.kullanici);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -62,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 10,
               ),
               Text(
-                name,
+                widget.kullanici != null ? widget.kullanici!.ad :  name,
                 style: TextStyle(
                     color: Colors.amberAccent[200],
                     fontWeight: FontWeight.bold,
