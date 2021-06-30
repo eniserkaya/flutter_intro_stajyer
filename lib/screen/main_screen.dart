@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_intro/model/kullanici.dart';
 import 'package:flutter_intro/screen/profile_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -16,7 +20,10 @@ class MainScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('Merhaba Dünya');
+          sunucudanVerileriGetir().then((response) {
+            Kullanici kullanici = Kullanici.fromJson(json.decode(response.data));
+            print(kullanici.ad);
+          });
         },
         child: Icon(Icons.ac_unit),
       ),
@@ -43,5 +50,23 @@ class MainScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<Response> sunucudanVerileriGetir() async {
+    var dio = Dio();
+    createHttpRequestConfig(dio);
+    Response? response;
+    await dio
+        .get('https://www.eniserkaya.com/tutorials/flutter/json_parser.php')
+        .then((resp) {
+      response = resp;
+    });
+    return response!;
+  }
+
+  createHttpRequestConfig(dio) {
+    dio.options.connectTimeout = 15000;
+    dio.options.receiveTimeout = 15000;
+    dio.options.responseType = ResponseType.plain;
   }
 }
